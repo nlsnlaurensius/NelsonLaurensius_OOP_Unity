@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Vector2 timeToFullSpeed = new Vector2(0.5f, 0.5f);
     [SerializeField] Vector2 timeToStop = new Vector2(0.5f, 0.5f);
     [SerializeField] Vector2 stopClamp = new Vector2(0.1f, 0.1f); 
+ [SerializeField] float frictionCoefficient = 5f; 
 
     public Vector2 moveDirection;
     Vector2 moveVelocity;
@@ -17,12 +18,14 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        Initialize();
+        
         if(moveDirection.magnitude == 0)
         {
-            moveVelocity = Vector2.zero;
-        } else{
-            moveVelocity = 2 * maxSpeed/timeToFullSpeed;
+            Initialize();
+        } 
+        else
+        {
+            moveVelocity = 2 * maxSpeed / timeToFullSpeed;
         }
         moveFriction = -2 * maxSpeed / (timeToFullSpeed * timeToFullSpeed);
         stopFriction = -2 * maxSpeed / (timeToStop * timeToStop);
@@ -35,33 +38,36 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public void Move()
+{
+    Vector2 currentVelocity = rb.velocity;
+
+    if (moveDirection.magnitude == 0)
     {
-        Vector2 friction = GetFriction();
-        Vector2 currentVelocity = rb.velocity;
+        Vector2 frictionForce = -currentVelocity.normalized * frictionCoefficient;
+        
+        currentVelocity += frictionForce * Time.deltaTime;
 
-        if (moveDirection.magnitude == 0)
+        currentVelocity.x = Mathf.Clamp(currentVelocity.x, -stopClamp.x, stopClamp.x);
+        currentVelocity.y = Mathf.Clamp(currentVelocity.y, -stopClamp.y, stopClamp.y);
+
+        if (Mathf.Abs(currentVelocity.x) <= stopClamp.x)
         {
-            currentVelocity.x = Mathf.Lerp(currentVelocity.x, 0, timeToStop.x * Time.deltaTime);
-            currentVelocity.y = Mathf.Lerp(currentVelocity.y, 0, timeToStop.y * Time.deltaTime);
-
-            // Check if the velocity is below the stopClamp threshold
-            if (Mathf.Abs(currentVelocity.x) < stopClamp.x)
-            {
-                currentVelocity.x = 0;
-            }
-            if (Mathf.Abs(currentVelocity.y) < stopClamp.y)
-            {
-                currentVelocity.y = 0;
-            }
+            currentVelocity.x = 0;
         }
-        else
+        if (Mathf.Abs(currentVelocity.y) <= stopClamp.y)
         {
-            currentVelocity.x = Mathf.Lerp(currentVelocity.x, moveDirection.x * maxSpeed.x, timeToFullSpeed.x * Time.deltaTime);
-            currentVelocity.y = Mathf.Lerp(currentVelocity.y, moveDirection.y * maxSpeed.y, timeToFullSpeed.y * Time.deltaTime);
+            currentVelocity.y = 0;
         }
-
-        rb.velocity = currentVelocity;
     }
+    else
+    {
+        currentVelocity.x = Mathf.Lerp(currentVelocity.x, moveDirection.x * maxSpeed.x, timeToFullSpeed.x * Time.deltaTime);
+        currentVelocity.y = Mathf.Lerp(currentVelocity.y, moveDirection.y * maxSpeed.y, timeToFullSpeed.y * Time.deltaTime);
+    }
+
+    rb.velocity = currentVelocity;
+}
+
 
     public Vector2 GetFriction()
     {
