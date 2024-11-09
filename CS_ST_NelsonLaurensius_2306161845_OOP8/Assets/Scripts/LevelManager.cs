@@ -5,24 +5,33 @@ using UnityEngine.SceneManagement;
 public class LevelManager : MonoBehaviour
 {
     [SerializeField] Animator animator;
+    [SerializeField] AudioSource audioSource;   
     public Animator Animator => animator;
 
-
-    void Awake(){   
+    void Awake()
+    {   
         animator.enabled = false;
-        
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
     }
     
     IEnumerator LoadSceneAsync(string sceneName)
     {
         animator.enabled = true;
         
-            animator.SetTrigger("EndTransition");
-            yield return new WaitForSeconds(1);  
-            Debug.Log("StartTransition ke trigger");
+        animator.SetTrigger("EndTransition");
         
+        if (audioSource.clip != null)
+        {
+            audioSource.Play(); 
+        }
+        
+        yield return new WaitForSeconds(0.2f);  
+        Debug.Log("StartTransition ke trigger");
 
-         SceneManager.LoadSceneAsync(sceneName);
+        SceneManager.LoadSceneAsync(sceneName);
 
         if (sceneName == "Main")
         {
