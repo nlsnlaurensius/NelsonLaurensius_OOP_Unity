@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyHorizontal : Enemy
@@ -18,7 +16,7 @@ public class EnemyHorizontal : Enemy
     void Update()
     {
         Move();
-        CheckBoundsAndReverse();
+        CheckBoundsAndTeleport();
     }
 
     private void RandomizeSpawn()
@@ -34,11 +32,15 @@ public class EnemyHorizontal : Enemy
         transform.Translate(Vector2.right * moveDirection * speed * Time.deltaTime);
     }
 
-    private void CheckBoundsAndReverse()
+    private void CheckBoundsAndTeleport()
     {
-        if (transform.position.x > screenBoundX || transform.position.x < -screenBoundX)
+        if (movingRight && transform.position.x > screenBoundX)
         {
-            movingRight = !movingRight;
+            transform.position = new Vector3(-screenBoundX, transform.position.y, transform.position.z);
+        }
+        else if (!movingRight && transform.position.x < -screenBoundX)
+        {
+            transform.position = new Vector3(screenBoundX, transform.position.y, transform.position.z);
         }
     }
 }

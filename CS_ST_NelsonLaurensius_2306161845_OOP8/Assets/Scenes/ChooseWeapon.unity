@@ -2283,7 +2283,7 @@ PrefabInstance:
     - target: {fileID: 3192857879133960370, guid: 5c4a6f33746efd54189bbb24dc9eccd0, type: 3}
       propertyPath: bullet
       value: 
-      objectReference: {fileID: -7614498180856171088, guid: a06070581d6e63b44866f92ea4705c58, type: 3}
+      objectReference: {fileID: -7614498180856171088, guid: 112bd05e6a7bf884688603148338e76e, type: 3}
     - target: {fileID: 4468057416244820419, guid: 5c4a6f33746efd54189bbb24dc9eccd0, type: 3}
       propertyPath: m_TagString
       value: Untagged

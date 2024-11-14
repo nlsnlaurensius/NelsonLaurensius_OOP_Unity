@@ -32,7 +32,7 @@ public class EnemyBoss : Enemy
     void Update()
     {
         Move();
-        CheckBoundsAndReverse();
+        CheckBoundsAndTeleport();
         AutoFireWeapon();
     }
 
@@ -49,11 +49,15 @@ public class EnemyBoss : Enemy
         transform.Translate(Vector2.left * moveDirection * speed * Time.deltaTime);
     }
 
-    private void CheckBoundsAndReverse()
+    private void CheckBoundsAndTeleport()
     {
-        if (transform.position.x > screenBoundX || transform.position.x < -screenBoundX)
+        if (movingRight && transform.position.x > screenBoundX)
         {
-            movingRight = !movingRight;
+            transform.position = new Vector3(-screenBoundX, transform.position.y, transform.position.z);
+        }
+        else if (!movingRight && transform.position.x < -screenBoundX)
+        {
+            transform.position = new Vector3(screenBoundX, transform.position.y, transform.position.z);
         }
     }
 
