@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5358039788001204160
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6213590729767036051}
+  m_Layer: 0
+  m_Name: BulletSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6213590729767036051
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5358039788001204160}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.3402778, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6810401720831853775}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6790399080759726612
 GameObject:
   m_ObjectHideFlags: 0
@@ -28,10 +59,11 @@ Transform:
   m_GameObject: {fileID: 6790399080759726612}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.27472508, y: 1.2077895, z: -19.93712}
+  m_LocalPosition: {x: 0.27472508, y: 1.2077895, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 6213590729767036051}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1142637741090936613
@@ -46,7 +78,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc717963b227f6f4ab523233e3608c30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parentTransform: {fileID: 0}
+  shootIntervalInSeconds: 0.1
+  bullet: {fileID: -7614498180856171088, guid: 112bd05e6a7bf884688603148338e76e, type: 3}
+  bulletSpawnPoint: {fileID: 6213590729767036051}
 --- !u!95 &9019277737545238534
 Animator:
   serializedVersion: 5

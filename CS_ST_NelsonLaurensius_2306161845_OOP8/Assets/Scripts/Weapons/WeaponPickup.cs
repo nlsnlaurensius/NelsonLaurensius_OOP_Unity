@@ -32,8 +32,6 @@ public class WeaponPickup : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Player nabrak WeaponPickup!");
-
             Weapon existingWeapon = other.GetComponentInChildren<Weapon>();
             if (existingWeapon != null)
             {
@@ -43,7 +41,7 @@ public class WeaponPickup : MonoBehaviour
             if (weapon != null)
             {
                 weapon.transform.SetParent(other.transform);
-                weapon.transform.localPosition = Vector3.zero;
+                weapon.transform.localPosition = new Vector3(0, 0, 1);
 
                 TurnVisual(true);
             }
