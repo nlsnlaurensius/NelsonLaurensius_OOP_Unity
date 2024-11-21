@@ -7,6 +7,7 @@ public class EnemyHorizontal : Enemy
 
     void Start()
     {
+        level = 1; // Set level untuk EnemyHorizontal
         Camera mainCamera = Camera.main;
         screenBoundX = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, 0, mainCamera.transform.position.z)).x;
         RandomizeSpawn();

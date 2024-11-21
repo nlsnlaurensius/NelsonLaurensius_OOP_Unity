@@ -1,14 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyTargeting : Enemy
 {
     private float speed = 3f;
     private Transform playerTransform;
-
+    
     void Start()
     {
+        level = 2; // Set level untuk EnemyTargeting
         if (Player.Instance != null)
         {
             playerTransform = Player.Instance.transform;

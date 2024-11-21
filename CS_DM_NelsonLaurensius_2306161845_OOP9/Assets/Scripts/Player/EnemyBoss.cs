@@ -3,15 +3,17 @@ using UnityEngine;
 public class EnemyBoss : Enemy
 {
     private float speed = 1f;
-    private bool movingRight = false;
     private float screenBoundX;
 
     [SerializeField] private float shootIntervalInSeconds = 2f;
     private Weapon weaponInstance;
     private float timer;
 
+    private Vector3 initialPosition;
+
     void Start()
     {
+        level = 3; // Set level untuk EnemyBoss
         Camera mainCamera = Camera.main;
         screenBoundX = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, 0, mainCamera.transform.position.z)).x;
 
@@ -40,27 +42,26 @@ public class EnemyBoss : Enemy
 
     private void SetInitialPosition()
     {
-        transform.position = new Vector3(screenBoundX, transform.position.y, transform.position.z);
-        movingRight = true;
+        initialPosition = new Vector3(screenBoundX, transform.position.y, transform.position.z);
+        transform.position = initialPosition;
 
         transform.rotation = Quaternion.Euler(0, 0, 180);
     }
 
     private void Move()
     {
-        float moveDirection = movingRight ? 1 : -1;
-        transform.Translate(Vector2.right * moveDirection * speed * Time.deltaTime);
+        transform.Translate(Vector2.right * speed * Time.deltaTime);
     }
 
     private void CheckBoundsAndTeleport()
     {
-        if (!movingRight && transform.position.x < -screenBoundX)
-        {
-            transform.position = new Vector3(screenBoundX, transform.position.y, transform.position.z);
-        }
-        else if (movingRight && transform.position.x > screenBoundX)
+        if (transform.position.x > screenBoundX)
         {
             transform.position = new Vector3(-screenBoundX, transform.position.y, transform.position.z);
+        }
+        else if (transform.position.x < -screenBoundX)
+        {
+            transform.position = initialPosition;
         }
     }
 

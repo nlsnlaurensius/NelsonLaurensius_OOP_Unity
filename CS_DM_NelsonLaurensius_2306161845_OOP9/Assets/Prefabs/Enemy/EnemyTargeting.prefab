@@ -51,6 +51,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7d825135f718e84f93f328fba680608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  level: 2
+  combatManager: {fileID: 1818237330491580451, guid: 5c4647117d862a64e804d438b63885d2, type: 3}
+  spawner: {fileID: 5004534709525609971, guid: 602dfd7799937bb41a952540b2674313, type: 3}
 --- !u!50 &9106689015297091582
 Rigidbody2D:
   serializedVersion: 4

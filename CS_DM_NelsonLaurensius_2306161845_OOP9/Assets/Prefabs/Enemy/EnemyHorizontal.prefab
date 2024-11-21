@@ -151,6 +151,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 375817e81ebef8c4a885037a6671da34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  level: 1
+  combatManager: {fileID: 1818237330491580451, guid: 5c4647117d862a64e804d438b63885d2, type: 3}
+  spawner: {fileID: 7152209640360258835, guid: 570795f67ecca7a40aee52c039c99974, type: 3}
 --- !u!61 &5621307587913785466
 BoxCollider2D:
   m_ObjectHideFlags: 0
