@@ -10,23 +10,23 @@ public class Enemy : MonoBehaviour
     {
         if (combatManager != null)
         {
-            combatManager.OnEnemyKilled(); // Mengurangi totalEnemies di CombatManager
+            combatManager.OnEnemyKilled();
         }
         else
         {
-            Debug.LogError($"CombatManager not assigned for {gameObject.name}.");
+            Debug.LogError($"CombatManager tidak ditetapkan untuk {gameObject.name}.");
         }
 
         if (spawner != null)
         {
-            spawner.OnEnemyKilled(); // Mengelola statistik spawner
+            spawner.OnEnemyKilled();
         }
         else
         {
-            Debug.LogError($"Spawner not assigned for {gameObject.name}.");
+            Debug.LogError($"Spawner tidak ditetapkan untuk {gameObject.name}.");
         }
 
-        Debug.Log($"{gameObject.name} destroyed.");
+        Debug.Log($"{gameObject.name} dihancurkan.");
     }
 
     void Awake()

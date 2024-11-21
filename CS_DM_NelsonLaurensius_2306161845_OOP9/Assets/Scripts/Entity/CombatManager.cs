@@ -37,7 +37,7 @@ public class CombatManager : MonoBehaviour
 
     private void StartWaveCountdown()
     {
-        Debug.Log($"Wave {waveNumber} will start in {waveInterval} seconds...");
+        Debug.Log($"Gelombang {waveNumber} akan dimulai dalam {waveInterval} detik...");
         timer = 0f;
         isWaveInProgress = false;
     }
@@ -46,11 +46,12 @@ public class CombatManager : MonoBehaviour
     {
         if (waveNumber > 3)
         {
-            Debug.Log("Congratulations! You have cleared all waves! Game Over.");
+            Debug.Log("Selamat! Anda telah menyelesaikan semua gelombang! Permainan Selesai.");
+            timer = 0f;
             return;
         }
 
-        Debug.Log($"Starting Wave {waveNumber}");
+        Debug.Log($"Memulai Gelombang {waveNumber}");
 
         totalEnemies = 0;
 
@@ -58,27 +59,38 @@ public class CombatManager : MonoBehaviour
         {
             if (spawner.level <= waveNumber)
             {
+                Debug.Log($"Spawner {spawner.gameObject.name} diaktifkan untuk gelombang {waveNumber}");
                 spawner.SetSpawnCountForWave(waveNumber);
                 spawner.StartSpawning();
                 totalEnemies += spawner.spawnCount;
             }
         }
 
-        Debug.Log($"Wave {waveNumber} started with {totalEnemies} total enemies.");
+        Debug.Log($"Gelombang {waveNumber} dimulai dengan total {totalEnemies} musuh.");
         isWaveInProgress = true;
     }
 
     private void CheckWaveCompletion()
     {
-        if (totalEnemies <= 0)
-        {
-            Debug.Log($"Wave {waveNumber} completed!");
+        bool allSpawnersFinished = true;
 
+        foreach (var spawner in enemySpawners)
+        {
+            if (!spawner.AreAllEnemiesDefeated())
+            {
+                allSpawnersFinished = false;
+                break;
+            }
+        }
+
+        if (allSpawnersFinished)
+        {
+            Debug.Log($"Gelombang {waveNumber} selesai!");
             waveNumber++;
 
             if (waveNumber > 3)
             {
-                Debug.Log("All waves cleared! Congratulations on your victory!");
+                Debug.Log("Semua gelombang selesai! Selamat atas kemenangan Anda!");
                 isWaveInProgress = false;
                 return;
             }
@@ -91,14 +103,6 @@ public class CombatManager : MonoBehaviour
     {
         totalEnemies--;
 
-        if (totalEnemies < 0) totalEnemies = 0;
-
-        Debug.Log($"Enemy killed! Remaining enemies: {totalEnemies}");
-
-        if (totalEnemies == 0)
-        {
-            Debug.Log($"Wave {waveNumber} completed!");
-            isWaveInProgress = false;
-        }
+        Debug.Log($"Musuh terbunuh! Sisa musuh: {totalEnemies}");
     }
 }
