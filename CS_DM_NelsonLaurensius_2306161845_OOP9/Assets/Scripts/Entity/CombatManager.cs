@@ -11,17 +11,42 @@ public class CombatManager : MonoBehaviour
     public int waveNumber = 1;
     public int totalEnemies = 0;
     private bool isWaveInProgress = false;
+    private bool isWaveIntervalActive = false;
+    
+    private GameUIController uiController;
 
     void Start()
     {
         waveNumber = 1;
         totalEnemies = 0;
+
+        uiController = FindObjectOfType<GameUIController>();
+        if (uiController != null)
+        {
+            uiController.SetWave(waveNumber);
+            uiController.SetEnemiesLeft(totalEnemies);
+        }
+
+        foreach (var spawner in enemySpawners)
+        {
+            spawner.combatManager = this;
+        }
+
         StartWaveCountdown();
     }
 
     void Update()
     {
-        if (!isWaveInProgress)
+        if (isWaveIntervalActive)
+        {
+            timer += Time.deltaTime;
+            if (timer >= waveInterval)
+            {
+                isWaveIntervalActive = false;
+                StartWave();
+            }
+        }
+        else if (!isWaveInProgress)
         {
             timer += Time.deltaTime;
             if (timer >= waveInterval)
@@ -29,80 +54,57 @@ public class CombatManager : MonoBehaviour
                 StartWave();
             }
         }
-        else
-        {
-            CheckWaveCompletion();
-        }
     }
 
     private void StartWaveCountdown()
     {
-        Debug.Log($"Gelombang {waveNumber} akan dimulai dalam {waveInterval} detik...");
         timer = 0f;
         isWaveInProgress = false;
     }
 
     private void StartWave()
     {
-        if (waveNumber > 3)
-        {
-            Debug.Log("Selamat! Anda telah menyelesaikan semua gelombang! Permainan Selesai.");
-            timer = 0f;
-            return;
-        }
-
-        Debug.Log($"Memulai Gelombang {waveNumber}");
-
         totalEnemies = 0;
 
         foreach (var spawner in enemySpawners)
         {
             if (spawner.level <= waveNumber)
             {
-                Debug.Log($"Spawner {spawner.gameObject.name} diaktifkan untuk gelombang {waveNumber}");
                 spawner.SetSpawnCountForWave(waveNumber);
                 spawner.StartSpawning();
                 totalEnemies += spawner.spawnCount;
             }
         }
 
-        Debug.Log($"Gelombang {waveNumber} dimulai dengan total {totalEnemies} musuh.");
+        if (uiController != null)
+        {
+            uiController.SetWave(waveNumber);
+            uiController.SetEnemiesLeft(totalEnemies);
+        }
+
         isWaveInProgress = true;
     }
 
-    private void CheckWaveCompletion()
-    {
-        bool allSpawnersFinished = true;
-
-        foreach (var spawner in enemySpawners)
-        {
-            if (!spawner.AreAllEnemiesDefeated())
-            {
-                allSpawnersFinished = false;
-                break;
-            }
-        }
-
-        if (allSpawnersFinished)
-        {
-            Debug.Log($"Gelombang {waveNumber} selesai!");
-            waveNumber++;
-
-            if (waveNumber > 3)
-            {
-                Debug.Log("Semua gelombang selesai! Selamat atas kemenangan Anda!");
-                isWaveInProgress = false;
-                return;
-            }
-
-            StartWaveCountdown();
-        }
-    }
-
-    public void OnEnemyKilled()
+    public void OnEnemyKilled(int enemyLevel)
     {
         totalEnemies--;
 
-        Debug.Log($"Musuh terbunuh! Sisa musuh: {totalEnemies}");
+        if (uiController != null)
+        {
+            uiController.SetEnemiesLeft(totalEnemies);
+            uiController.AddPoints(enemyLevel); 
+        }
+
+        if (totalEnemies <= 0)
+        {
+            waveNumber++;
+            isWaveIntervalActive = true;
+            timer = 0f;
+
+            if (uiController != null)
+            {
+                uiController.SetWave(waveNumber);
+            }
+        }
     }
 }

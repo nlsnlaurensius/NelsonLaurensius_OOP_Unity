@@ -7,7 +7,7 @@ public class EnemyForward : Enemy
 
     void Start()
     {
-        level = 1; // Set level untuk EnemyForward
+        level = 1; 
         Camera mainCamera = Camera.main;
         screenBoundY = mainCamera.ScreenToWorldPoint(new Vector3(0, Screen.height, mainCamera.transform.position.z)).y;
         ResetPositionToTop();

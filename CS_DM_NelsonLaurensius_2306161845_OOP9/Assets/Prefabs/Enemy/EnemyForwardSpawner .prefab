@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6273053166422203499}
   m_Layer: 0
   m_Name: 'EnemyForwardSpawner '
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45,12 +45,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnedEnemy: {fileID: 4267309205270245370, guid: 6ecbff1fcacebe54aaecbbd341241cb1, type: 3}
-  minimumKillsToIncreaseSpawnCount: 6
+  minimumKillsToIncreaseSpawnCount: 4
   totalKill: 0
   spawnInterval: 3
-  level: 1
   spawnCount: 0
   defaultSpawnCount: 2
   spawnCountMultiplier: 1
   multiplierIncreaseCount: 1
   combatManager: {fileID: 1818237330491580451, guid: 5c4647117d862a64e804d438b63885d2, type: 3}
+  level: 1
+  isSpawning: 0

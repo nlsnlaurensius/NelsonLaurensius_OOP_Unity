@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
@@ -19,63 +18,78 @@ public class EnemySpawner : MonoBehaviour
     public int multiplierIncreaseCount = 1;
 
     public CombatManager combatManager;
+    public int level = 1;
+    public bool isSpawning = false;
 
-    private bool isSpawning = false;
-    private int activeEnemies = 0;
+    private float spawnTimer = 0f;
 
-    public void StartSpawning()
+    private void Start()
     {
-        if (!isSpawning && spawnedEnemy != null && level <= combatManager.waveNumber) 
+        spawnCount = defaultSpawnCount;
+    }
+
+    private void Update()
+    {
+        if (isSpawning && spawnCount > 0)
         {
-            isSpawning = true;
-            Debug.Log($"Spawner {gameObject.name} sedang memunculkan musuh level {level} untuk gelombang {combatManager.waveNumber}");
-            StartCoroutine(SpawnEnemies());
-        }
-        else
-        {
-            Debug.Log($"Spawner {gameObject.name} dilewati. Level spawner: {level}, Gelombang: {combatManager.waveNumber}");
+            spawnTimer += Time.deltaTime;
+            if (spawnTimer >= spawnInterval)
+            {
+                SpawnEnemy();
+                spawnTimer = 0f;
+            }
         }
     }
 
-    private IEnumerator SpawnEnemies()
+    public void StartSpawning()
     {
-        for (int i = 0; i < spawnCount; i++)
+        if (spawnedEnemy == null)
         {
-            SpawnEnemy();
-            yield return new WaitForSeconds(spawnInterval);
+            return;
         }
+
+        isSpawning = true;
+        spawnTimer = 0f;
+    }
+
+    public void StopSpawning()
+    {
         isSpawning = false;
+    }
+
+    public void SetSpawnCountForWave(int waveNumber)
+    {
+        spawnCount = defaultSpawnCount;
     }
 
     private void SpawnEnemy()
     {
-        if (spawnedEnemy != null)
+        if (spawnCount <= 0 || spawnedEnemy == null) return;
+
+        Enemy enemyInstance = Instantiate(spawnedEnemy, transform.position, Quaternion.identity);
+
+        if (enemyInstance != null)
         {
-            Enemy enemyInstance = Instantiate(spawnedEnemy, transform.position, Quaternion.identity);
             enemyInstance.spawner = this;
             enemyInstance.combatManager = combatManager;
-            activeEnemies++;
         }
+
+        spawnCount--;
+
+        if (spawnCount <= 0) StopSpawning();
     }
 
     public void OnEnemyKilled()
     {
         totalKill++;
         totalKillWave++;
-        activeEnemies--;
-
-        Debug.Log($"{spawnedEnemy.name} dikalahkan. Total kill untuk spawner ini: {totalKill}");
 
         if (totalKillWave >= minimumKillsToIncreaseSpawnCount)
         {
             totalKillWave = 0;
-            spawnCount = defaultSpawnCount + (spawnCountMultiplier * multiplierIncreaseCount);
             multiplierIncreaseCount++;
-        }
-    }
 
-    public bool AreAllEnemiesDefeated()
-    {
-        return activeEnemies <= 0;
+            defaultSpawnCount = defaultSpawnCount + (spawnCountMultiplier * multiplierIncreaseCount);
+        }
     }
 }

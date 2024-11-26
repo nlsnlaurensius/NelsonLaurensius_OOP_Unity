@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Assertions;
 
 public class EnemyClickSpawner : MonoBehaviour
 {
@@ -8,7 +7,10 @@ public class EnemyClickSpawner : MonoBehaviour
 
     void Start()
     {
-       Assert.IsTrue(enemyVariants.Length > 0, "Tambahkan setidaknya 1 Prefab Enemy terlebih dahulu!");
+        if (enemyVariants.Length == 0)
+        {
+            Debug.LogError("Tambahkan setidaknya 1 Prefab Enemy terlebih dahulu!");
+        }
     }
 
     private void Update()

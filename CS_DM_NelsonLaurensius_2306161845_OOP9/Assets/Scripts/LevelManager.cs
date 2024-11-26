@@ -29,7 +29,6 @@
             }
             
             yield return new WaitForSeconds(0.2f);  
-            Debug.Log("StartTransition ke trigger");
 
             SceneManager.LoadSceneAsync(sceneName);
 

@@ -14,10 +14,6 @@ public class WeaponPickup : MonoBehaviour
             weapon = Instantiate(weaponHolder);
             TurnVisual(false, weapon);
         }
-        else
-        {
-            Debug.LogError("WeaponPickup Awake: Gak ada weapon holder.");   
-        }
     }
 
     void Start()
@@ -44,10 +40,6 @@ public class WeaponPickup : MonoBehaviour
                 weapon.transform.localPosition = new Vector3(0, 0, 1);
 
                 TurnVisual(true);
-            }
-            else
-            {
-                Debug.LogWarning("Weapon ga ada di WeaponPickup.");
             }
         }
     }

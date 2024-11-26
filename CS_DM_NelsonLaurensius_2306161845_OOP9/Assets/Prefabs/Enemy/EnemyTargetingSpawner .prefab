@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5004534709525609971}
   m_Layer: 0
   m_Name: 'EnemyTargetingSpawner '
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -48,9 +48,10 @@ MonoBehaviour:
   minimumKillsToIncreaseSpawnCount: 5
   totalKill: 0
   spawnInterval: 3
-  level: 1
   spawnCount: 2
   defaultSpawnCount: 5
   spawnCountMultiplier: 1
   multiplierIncreaseCount: 1
   combatManager: {fileID: 1818237330491580451, guid: 5c4647117d862a64e804d438b63885d2, type: 3}
+  level: 1
+  isSpawning: 0

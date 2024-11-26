@@ -18,7 +18,6 @@ public class HealthComponent : MonoBehaviour
     public void Subtract(int amount)
     {
         health -= amount;
-        Debug.Log($"{gameObject.name} : Health : {health}");
 
         if (health <= 0)
         {
@@ -29,7 +28,6 @@ public class HealthComponent : MonoBehaviour
 
     private void DestroyObject()
     {
-        Debug.Log($"{gameObject.name} Mati cuyy NT");
         Destroy(gameObject);
     }
 }

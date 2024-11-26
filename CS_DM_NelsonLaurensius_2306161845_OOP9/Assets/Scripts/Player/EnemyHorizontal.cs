@@ -4,12 +4,15 @@ public class EnemyHorizontal : Enemy
 {
     private float speed = 3f;
     private float screenBoundX;
+    private float screenBoundY;
 
     void Start()
     {
-        level = 1; // Set level untuk EnemyHorizontal
+        level = 1;
         Camera mainCamera = Camera.main;
         screenBoundX = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, 0, mainCamera.transform.position.z)).x;
+        screenBoundY = mainCamera.ScreenToWorldPoint(new Vector3(0, Screen.height, mainCamera.transform.position.z)).y;
+
         RandomizeSpawn();
     }
 
@@ -21,8 +24,8 @@ public class EnemyHorizontal : Enemy
 
     private void RandomizeSpawn()
     {
-        float spawnX = screenBoundX;
-        transform.position = new Vector3(spawnX, transform.position.y, transform.position.z);
+        float randomY = Random.Range(-screenBoundY, screenBoundY);
+        transform.position = new Vector3(screenBoundX, randomY, transform.position.z);
     }
 
     private void Move()
@@ -34,7 +37,7 @@ public class EnemyHorizontal : Enemy
     {
         if (transform.position.x < -screenBoundX)
         {
-            transform.position = new Vector3(screenBoundX, transform.position.y, transform.position.z);
+            RandomizeSpawn();
         }
     }
 }

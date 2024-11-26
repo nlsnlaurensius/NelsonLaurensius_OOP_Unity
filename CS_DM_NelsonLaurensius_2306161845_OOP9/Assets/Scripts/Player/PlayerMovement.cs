@@ -15,15 +15,16 @@ public class PlayerMovement : MonoBehaviour
     Vector2 stopFriction;
     Rigidbody2D rb;
 
-     Camera mainCamera;
-     Vector2 screenBounds;
-     void Start()
+    Camera mainCamera;
+    Vector2 screenBounds;
+
+    void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         mainCamera = Camera.main;
         screenBounds = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, mainCamera.transform.position.z));
         
-        if(moveDirection.magnitude == 0)
+        if (moveDirection.magnitude == 0)
         {
             Initialize();
         } 
@@ -43,6 +44,12 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move()
     {
+        if (!ChooseWeaponController.isGameActive)
+        {
+            rb.velocity = Vector2.zero;
+            return;
+        }
+
         Vector2 currentVelocity = rb.velocity;
 
         if (moveDirection.magnitude == 0)
@@ -86,7 +93,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void MoveBound()
+    public void MoveBound()    
     {
         Vector3 pos = transform.position;
         pos.x = Mathf.Clamp(pos.x, -screenBounds.x, screenBounds.x);
@@ -96,10 +103,11 @@ public class PlayerMovement : MonoBehaviour
 
     public bool IsMoving()
     {
-        if(rb.velocity.magnitude > 0)
+        if (rb.velocity.magnitude > 0)
         {
             return true;
-        } else
+        }
+        else
         {
             return false;
         }

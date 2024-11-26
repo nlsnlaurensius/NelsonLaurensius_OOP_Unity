@@ -198,8 +198,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: 3
-  combatManager: {fileID: 1818237330491580451, guid: 5c4647117d862a64e804d438b63885d2, type: 3}
   spawner: {fileID: 256744385611822755, guid: de544c2a6b5cab24cbc2658de3bcef36, type: 3}
+  combatManager: {fileID: 1818237330491580451, guid: 5c4647117d862a64e804d438b63885d2, type: 3}
   shootIntervalInSeconds: 2
 --- !u!114 &7634124666762861910
 MonoBehaviour:
@@ -213,7 +213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5c8c0e5078f5c648aaca05114c4cee7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 500
+  maxHealth: 200
 --- !u!114 &3192857879133960370
 MonoBehaviour:
   m_ObjectHideFlags: 0

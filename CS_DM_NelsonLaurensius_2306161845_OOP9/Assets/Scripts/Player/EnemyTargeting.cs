@@ -7,7 +7,7 @@ public class EnemyTargeting : Enemy
     
     void Start()
     {
-        level = 2; // Set level untuk EnemyTargeting
+        level = 2; 
         if (Player.Instance != null)
         {
             playerTransform = Player.Instance.transform;

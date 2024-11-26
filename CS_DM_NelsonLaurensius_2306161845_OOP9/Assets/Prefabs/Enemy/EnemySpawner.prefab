@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3404956468942622485}
   m_Layer: 0
   m_Name: EnemySpawner
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -52,4 +52,6 @@ MonoBehaviour:
   defaultSpawnCount: 2
   spawnCountMultiplier: 1
   multiplierIncreaseCount: 1
+  combatManager: {fileID: 0}
+  level: 1
   isSpawning: 0

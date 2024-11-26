@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7152209640360258835}
   m_Layer: 0
   m_Name: 'EnemyHorizontalSpawner '
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45,12 +45,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnedEnemy: {fileID: 1387673940139946332, guid: ddd5d20d18914234486eb8d16161f060, type: 3}
-  minimumKillsToIncreaseSpawnCount: 6
+  minimumKillsToIncreaseSpawnCount: 4
   totalKill: 0
   spawnInterval: 3
-  level: 1
   spawnCount: 2
   defaultSpawnCount: 2
   spawnCountMultiplier: 1
   multiplierIncreaseCount: 1
   combatManager: {fileID: 1818237330491580451, guid: 5c4647117d862a64e804d438b63885d2, type: 3}
+  level: 1
+  isSpawning: 0

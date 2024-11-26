@@ -4,6 +4,7 @@ public class EnemyBoss : Enemy
 {
     private float speed = 1f;
     private float screenBoundX;
+    private float screenBoundY;
 
     [SerializeField] private float shootIntervalInSeconds = 2f;
     private Weapon weaponInstance;
@@ -13,9 +14,10 @@ public class EnemyBoss : Enemy
 
     void Start()
     {
-        level = 3; // Set level untuk EnemyBoss
+        level = 3; 
         Camera mainCamera = Camera.main;
         screenBoundX = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, 0, mainCamera.transform.position.z)).x;
+        screenBoundY = mainCamera.ScreenToWorldPoint(new Vector3(0, Screen.height, mainCamera.transform.position.z)).y;
 
         SetInitialPosition();
 
@@ -25,10 +27,6 @@ public class EnemyBoss : Enemy
             if (player != null)
             {
                 weaponInstance = player.GetComponentInChildren<Weapon>();
-            }
-            else
-            {
-                Debug.LogError("Player GameObject dengan tag 'Player' tidak ditemukan di scene.");
             }
         }
     }
@@ -42,7 +40,7 @@ public class EnemyBoss : Enemy
 
     private void SetInitialPosition()
     {
-        initialPosition = new Vector3(screenBoundX, transform.position.y, transform.position.z);
+        initialPosition = new Vector3(screenBoundX, Random.Range(-screenBoundY, screenBoundY), transform.position.z);
         transform.position = initialPosition;
 
         transform.rotation = Quaternion.Euler(0, 0, 180);
@@ -57,11 +55,11 @@ public class EnemyBoss : Enemy
     {
         if (transform.position.x > screenBoundX)
         {
-            transform.position = new Vector3(-screenBoundX, transform.position.y, transform.position.z);
+            transform.position = new Vector3(-screenBoundX, Random.Range(-screenBoundY, screenBoundY), transform.position.z);
         }
         else if (transform.position.x < -screenBoundX)
         {
-            transform.position = initialPosition;
+            transform.position = new Vector3(screenBoundX, Random.Range(-screenBoundY, screenBoundY), transform.position.z);
         }
     }
 

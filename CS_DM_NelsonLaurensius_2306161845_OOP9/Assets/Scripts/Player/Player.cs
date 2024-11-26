@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
 
     private PlayerMovement playerMovement;
     private Animator animator;
+    private HealthComponent healthComponent; 
 
     private void Awake()
     {
@@ -18,15 +19,15 @@ public class Player : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
     }
 
     private void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();
         animator = GameObject.Find("EngineEffect").GetComponent<Animator>();
+        healthComponent = GetComponent<HealthComponent>(); 
     }
-    
+
     private void FixedUpdate()
     {
         playerMovement.moveDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
@@ -36,5 +37,10 @@ public class Player : MonoBehaviour
     private void LateUpdate()
     {
         animator.SetBool("IsMoving", playerMovement.IsMoving());
+    }
+
+    public HealthComponent GetHealthComponent()
+    {
+        return healthComponent;
     }
 }

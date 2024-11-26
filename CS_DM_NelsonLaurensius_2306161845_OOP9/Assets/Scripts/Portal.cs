@@ -41,10 +41,7 @@ public class Portal : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Player masuk portal.");
-
             GameManager.Instance.LevelManager.LoadScene("Main");
-
         }
     }
 

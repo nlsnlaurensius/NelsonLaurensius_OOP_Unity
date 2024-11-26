@@ -9,11 +9,6 @@ public class HitboxComponent : MonoBehaviour
     void Awake()
     {
         health = GetComponent<HealthComponent>();
-        if (health == null)
-        {
-            Debug.LogError("HealthComponent ilang di " + gameObject.name);
-        }
-
         invincibility = GetComponent<InvincibilityComponent>();
     }
 

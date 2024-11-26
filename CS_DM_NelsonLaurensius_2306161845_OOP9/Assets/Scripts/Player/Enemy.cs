@@ -2,31 +2,28 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public int level;
+    public int level = 1;
     public EnemySpawner spawner;
     public CombatManager combatManager;
+
+    private GameUIController uiController;
+
+    void Start()
+    {
+        uiController = FindObjectOfType<GameUIController>();
+    }
 
     void OnDestroy()
     {
         if (combatManager != null)
         {
-            combatManager.OnEnemyKilled();
-        }
-        else
-        {
-            Debug.LogError($"CombatManager tidak ditetapkan untuk {gameObject.name}.");
+            combatManager.OnEnemyKilled(level); 
         }
 
         if (spawner != null)
         {
             spawner.OnEnemyKilled();
         }
-        else
-        {
-            Debug.LogError($"Spawner tidak ditetapkan untuk {gameObject.name}.");
-        }
-
-        Debug.Log($"{gameObject.name} dihancurkan.");
     }
 
     void Awake()
